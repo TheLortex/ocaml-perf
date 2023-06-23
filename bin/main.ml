@@ -1,4 +1,4 @@
-let fd =
+(* let fd =
   Perf.(event_open ~cpu:(0) ~pid:(-1) ~flags:[] {
     type' = Hardware;
     config = Count_hw_cpu_cycles;
@@ -29,3 +29,13 @@ let () =
     Printf.printf "  : %12Ld\n%!" (Bytes.get_int64_ne bytes 16);
     Unix.sleepf 1.0
   done
+ *)
+
+ let () =
+  let st = Perf_cost.init () in
+  let v = Perf_cost.start st in
+  for _ = 0 to 2000000000 do
+    Sys.opaque_identity ()
+  done;
+  let e = Perf_cost.stop st v in
+  Printf.printf "%Ld / %Ld\n" (Perf_cost.cycles e) (Perf_cost.total_cycles e)
