@@ -1,0 +1,17 @@
+(library
+ (public_name perf)
+ (foreign_stubs
+  (language c)
+  (names stubs)
+ )
+ (libraries unix)
+ (ctypes
+  (external_library_name libocamlperf) ; ??
+  (build_flags_resolver vendored)
+  (headers (include "linux/perf_event.h"))
+  (type_description
+   (instance Type)
+   (functor Type_description))
+  (generated_types Types_generated)
+  (generated_entry_point C))
+)
